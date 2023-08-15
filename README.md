@@ -33,3 +33,5 @@ docker compose stop
 
 Stop DB and remove the container (all data will be lost!!!)
 docker compose down
+
+Open adminer DB dashboard in browser: [localhost:3333](http://localhost:3333/)
