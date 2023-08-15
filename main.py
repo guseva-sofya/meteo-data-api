@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 
 # add endpoint
-@app.route("/api", methods=["POST"])
+@app.route("/api", methods=["GET"])
 def my_endpoint():
     response_data = {"message": "Hello from API"}
     return jsonify(response_data)
