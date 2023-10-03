@@ -1,28 +1,26 @@
 from flask import Flask, request, jsonify, make_response
 
-import psycopg2
-
+from meteo import db
 
 app = Flask(__name__)
+db_connection = db.connect_to_db()
 
-data = [2]
+# TODO: 1. refactor DB connection
+# 2. Design meteo-API
+# 3. Deploy to cloud
 
 
-# defeult endpoint
+# default endpoint
 @app.route("/", methods=["GET"])
 def home():
     return "<h1>Welcome to my API.</h1>"
 
 
-# add endpoint
 @app.route("/get-data", methods=["GET"])
 def get_data():
-    # connect to PostgresSQL database
-    connection = connect_to_db()
-    cursor = connection.cursor()
+    cursor = db_connection.cursor()
     cursor.execute("SELECT id, name FROM my_table")
     result = cursor.fetchall()
-    print(result)
 
     response_data = []
     for row in result:
@@ -33,29 +31,16 @@ def get_data():
 
 @app.route("/post-data", methods=["POST"])
 def post_data():
-    # read request data and wite them into the database
+    # read request data and write them into the database
     request_data = request.get_json()
     id = request_data["id"]
     name = request_data["name"]
-    connection = connect_to_db()
-    cursor = connection.cursor()
+
+    cursor = db_connection.cursor()
     cursor.execute("INSERT INTO my_table (id, name) VALUES (%s, %s)", (id, name))
-    connection.commit()
+    db_connection.commit()
 
-    # data.extend(request_data["data"])
     return make_response("Data received", 200)
-
-
-def connect_to_db():
-    connection = psycopg2.connect(
-        database="meteo-data",
-        user="baloo",
-        password="junglebook",
-        host="localhost",  # use "localhost" for the local server
-        port="5432",  # typically 5432 for PostgreSQL
-    )
-    print("Connected to PostgreSQL")
-    return connection
 
 
 if __name__ == "__main__":
