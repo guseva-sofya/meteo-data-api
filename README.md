@@ -3,6 +3,8 @@
 docker compose up -d
 ```
 
+[Start Docker Desktop on Windows/Mac.]
+
 Show all containers:
 ```
 docker ps -a
