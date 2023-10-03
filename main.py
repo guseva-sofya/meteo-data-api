@@ -33,8 +33,16 @@ def get_data():
 
 @app.route("/post-data", methods=["POST"])
 def post_data():
+    # read request data and wite them into the database
     request_data = request.get_json()
-    data.extend(request_data["data"])
+    id = request_data["id"]
+    name = request_data["name"]
+    connection = connect_to_db()
+    cursor = connection.cursor()
+    cursor.execute("INSERT INTO my_table (id, name) VALUES (%s, %s)", (id, name))
+    connection.commit()
+
+    # data.extend(request_data["data"])
     return make_response("Data received", 200)
 
 
