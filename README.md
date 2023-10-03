@@ -18,7 +18,10 @@ Show all tables:
 \d
 
 Create new table:
-CREATE TABLE my_table (id integer, name text);
+CREATE TABLE my_table (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL
+);
 
 Show table's columns:
 \d my_table

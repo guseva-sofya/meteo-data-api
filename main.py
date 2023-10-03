@@ -33,11 +33,10 @@ def get_data():
 def post_data():
     # read request data and write them into the database
     request_data = request.get_json()
-    id = request_data["id"]
     name = request_data["name"]
 
     cursor = db_connection.cursor()
-    cursor.execute("INSERT INTO my_table (id, name) VALUES (%s, %s)", (id, name))
+    cursor.execute("INSERT INTO my_table (name) VALUES (%s)", (name,))
     db_connection.commit()
 
     return make_response("Data received", 200)
