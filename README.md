@@ -40,3 +40,37 @@ Stop DB and remove the container (all data will be lost!!!)
 docker compose down
 
 Open adminer DB dashboard in browser: [localhost:3333](http://localhost:3333/)
+
+## Alembic 
+
+Alembic is a database migration tool.
+
+To add alembic to the project:
+```
+poetry add alembic
+```
+
+To initialize alembic in your project:
+```
+alembic init alembic
+```
+This creates alembic files in the alembic directory.
+
+Connect alembic to your DB by setting the `sqlalchemy.url` in alembic.ini file.
+
+To add a new versioning script:
+```
+alembic revision -m "create_new_table"
+```
+This creates a new versioning script in alembic/versions. Edit the upgrade/downgrade
+functions inside the script.
+
+To run alembic migration:
+```
+alembic upgrade head
+```
+
+To downgrade:
+```
+alembic downgrade -1
+```
