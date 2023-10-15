@@ -28,5 +28,19 @@ def upgrade() -> None:
     )
 
 
+# alternatively, we can use raw SQL:
+# def upgrade() -> None:
+#     op.execute(
+#         """
+#         CREATE TABLE temperature_records (
+#             id SERIAL PRIMARY KEY,
+#             temperature FLOAT NOT NULL,
+#             location TEXT NOT NULL,
+#             recorded_at TIMESTAMP NOT NULL
+#         )
+#         """
+#     )
+
+
 def downgrade() -> None:
     op.drop_table("temperature_records")
