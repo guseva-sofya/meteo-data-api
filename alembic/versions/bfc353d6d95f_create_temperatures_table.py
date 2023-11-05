@@ -24,7 +24,7 @@ def upgrade() -> None:
         sa.Column("id", sa.Integer, primary_key=True),
         sa.Column("temperature", sa.Float, nullable=False),
         sa.Column("location", sa.String(255), nullable=False),
-        sa.Column("recorded_at", sa.DateTime, nullable=False),
+        sa.Column("recorded_at", sa.DateTime(timezone=True), nullable=False),
     )
 
 

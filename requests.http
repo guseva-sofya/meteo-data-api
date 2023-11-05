@@ -8,3 +8,13 @@ Content-Type: application/json
 {
     "name": "Sofya"
 }
+
+###
+
+POST http://127.0.0.1:8000/temperature
+Content-Type: application/json
+
+{
+    "location": "Munich",
+    "temperature": 10.9
+}

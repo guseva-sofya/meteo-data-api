@@ -1,9 +1,11 @@
-from flask import Flask, request, jsonify, make_response
+from flask import Flask, Response, request, jsonify, make_response
 
 from meteo import db
+from meteo import temperatureDao
 
 app = Flask(__name__)
 db_connection = db.connect_to_db()
+temperature_dao = temperatureDao.TemperatureDao(db_connection)
 
 # TODO: 1. refactor DB connection
 # 2. Design meteo-API
@@ -40,6 +42,17 @@ def post_data():
     db_connection.commit()
 
     return make_response("Data received", 200)
+
+
+@app.route("/temperature", methods=["POST"])
+def save_temperature_record() -> Response:
+    request_data = request.get_json()
+    location: str = request_data["location"]
+    temperature: float = request_data["temperature"]
+
+    temperature_dao.insert_temperature_record(location, temperature)
+
+    return make_response("", 204)
 
 
 if __name__ == "__main__":

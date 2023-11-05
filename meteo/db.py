@@ -4,7 +4,7 @@ from alembic import command
 import psycopg2
 
 
-def connect_to_db():
+def connect_to_db() -> psycopg2.extensions.connection:
     connection = psycopg2.connect(
         database="meteo-data",
         user="baloo",

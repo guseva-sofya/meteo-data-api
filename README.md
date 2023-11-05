@@ -70,7 +70,9 @@ To run alembic migration:
 alembic upgrade head
 ```
 
-To downgrade:
+To downgrade (for example, delete table):
 ```
 alembic downgrade -1
 ```
+
+DAO (temperature_dao.py) - database access object.
