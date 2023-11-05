@@ -1,3 +1,4 @@
+from typing import List
 from flask import Flask, Response, request, jsonify, make_response
 
 from meteo import db
@@ -7,41 +8,19 @@ app = Flask(__name__)
 db_connection = db.connect_to_db()
 temperature_dao = temperatureDao.TemperatureDao(db_connection)
 
-# TODO: 1. refactor DB connection
-# 2. Design meteo-API
-# 3. Deploy to cloud
+# TODO
+# - refactor DB connection
+# - Get temperature for location
+# - Add linters ruff, add blackformatter
+# - Add tests
+# - Design meteo-API
+# - Deploy to cloud
 
 
 # default endpoint
 @app.route("/", methods=["GET"])
 def home():
     return "<h1>Welcome to my API.</h1>"
-
-
-@app.route("/get-data", methods=["GET"])
-def get_data():
-    cursor = db_connection.cursor()
-    cursor.execute("SELECT id, name FROM my_table")
-    result = cursor.fetchall()
-
-    response_data = []
-    for row in result:
-        row_dict = {"id": row[0], "name": row[1]}
-        response_data.append(row_dict)
-    return jsonify(response_data)
-
-
-@app.route("/post-data", methods=["POST"])
-def post_data():
-    # read request data and write them into the database
-    request_data = request.get_json()
-    name = request_data["name"]
-
-    cursor = db_connection.cursor()
-    cursor.execute("INSERT INTO my_table (name) VALUES (%s)", (name,))
-    db_connection.commit()
-
-    return make_response("Data received", 200)
 
 
 @app.route("/temperature", methods=["POST"])
@@ -53,6 +32,12 @@ def save_temperature_record() -> Response:
     temperature_dao.insert_temperature_record(location, temperature)
 
     return make_response("", 204)
+
+
+@app.route("/temperature/locations", methods=["GET"])
+def get_temperature_locations() -> Response:
+    locations = temperature_dao.find_available_locations()
+    return jsonify(locations)
 
 
 if __name__ == "__main__":

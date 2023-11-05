@@ -1,3 +1,4 @@
+from typing import List
 import psycopg2
 
 
@@ -12,3 +13,11 @@ class TemperatureDao:
             (location, temperature),
         )
         self.db_connection.commit()
+
+    def find_available_locations(self) -> List[str]:
+        cursor = self.db_connection.cursor()
+        cursor.execute("SELECT DISTINCT(location) FROM temperature_records")
+        result = cursor.fetchall()
+
+        locations = [row[0] for row in result]
+        return locations
