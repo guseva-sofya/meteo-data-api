@@ -76,3 +76,26 @@ alembic downgrade -1
 ```
 
 DAO (temperature_dao.py) - database access object.
+
+## SQL commands
+
+Update name of the field in a table:
+```
+update temperature_records set location='Munich' where id in (1,2);
+```
+
+Start database transaction (opportunity to go back to a state before transaction);
+```
+begin;
+```
+
+Make commands. Then rollback:
+
+```
+rollback;
+```
+
+To commit changes (without opportunity to rollback):
+```
+commit
+```

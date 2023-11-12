@@ -13,8 +13,8 @@ POST http://127.0.0.1:8000/temperature
 Content-Type: application/json
 
 {
-    "location": "London",
-    "temperature": 14.9
+    "location": "MoScow",
+    "temperature": -14.9
 }
 
 ###
@@ -23,4 +23,4 @@ GET http://127.0.0.1:8000/temperature/locations
 
 ###
 
-GET http://127.0.0.1:8000/temperature/Munich
+GET http://127.0.0.1:8000/temperature/munich

@@ -26,7 +26,7 @@ def home():
 @app.route("/temperature", methods=["POST"])
 def save_temperature_record() -> Response:
     request_data = request.get_json()
-    location: str = request_data["location"]
+    location: str = request_data["location"].lower()
     temperature: float = request_data["temperature"]
 
     temperature_dao.insert_temperature_record(location, temperature)
@@ -42,7 +42,7 @@ def get_temperature_locations() -> Response:
 
 @app.route("/temperature/<location>", methods=["GET"])
 def get_temperature_for_location(location: str) -> Response:
-    temperature_records = temperature_dao.find_temperature_for_location(location)
+    temperature_records = temperature_dao.find_temperature_for_location(location.lower())
     return jsonify(temperature_records)
 
 
