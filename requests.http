@@ -1,5 +1,3 @@
-GET http://127.0.0.1:8000/get-data
-
 ###
 
 POST http://127.0.0.1:8000/post-data
@@ -22,3 +20,7 @@ Content-Type: application/json
 ###
 
 GET http://127.0.0.1:8000/temperature/locations
+
+###
+
+GET http://127.0.0.1:8000/temperature/Munich

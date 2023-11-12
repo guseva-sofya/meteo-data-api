@@ -40,5 +40,11 @@ def get_temperature_locations() -> Response:
     return jsonify(locations)
 
 
+@app.route("/temperature/<location>", methods=["GET"])
+def get_temperature_for_location(location: str) -> Response:
+    temperature_records = temperature_dao.find_temperature_for_location(location)
+    return jsonify(temperature_records)
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)

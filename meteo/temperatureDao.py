@@ -1,5 +1,13 @@
+from dataclasses import dataclass
 from typing import List
 import psycopg2
+from datetime import datetime
+
+
+@dataclass
+class TemperatureRecord:
+    temperature: float
+    time: datetime
 
 
 class TemperatureDao:
@@ -21,3 +29,17 @@ class TemperatureDao:
 
         locations = [row[0] for row in result]
         return locations
+
+    def find_temperature_for_location(self, location: str) -> List[TemperatureRecord]:
+        cursor = self.db_connection.cursor()
+        cursor.execute(
+            """
+                SELECT temperature, recorded_at
+                FROM temperature_records
+                WHERE location=%s
+                ORDER BY recorded_at
+            """,
+            (location,),
+        )
+        result = cursor.fetchall()
+        return [TemperatureRecord(row[0], row[1]) for row in result]
