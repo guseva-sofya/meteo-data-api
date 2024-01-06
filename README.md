@@ -99,3 +99,16 @@ To commit changes (without opportunity to rollback):
 ```
 commit
 ```
+
+## Testing
+
+To run all tests use 
+```
+pytest
+```
+
+To show print messages in tests run
+
+```
+pytest -s
+```

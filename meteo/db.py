@@ -3,8 +3,14 @@ from alembic.config import Config
 from alembic import command
 import psycopg2
 
+connection = None
+
 
 def connect_to_db() -> psycopg2.extensions.connection:
+    global connection
+    if connection is not None:
+        return connection
+
     connection = psycopg2.connect(
         database="meteo-data",
         user="baloo",
@@ -28,3 +34,10 @@ def run_alembic_migration():
 
     # Run the migrations
     command.upgrade(alembic_cfg, "head")
+
+
+def clear():
+    conn = connect_to_db()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM temperature_records")
+    conn.commit()
