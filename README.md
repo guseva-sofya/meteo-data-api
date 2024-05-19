@@ -112,3 +112,45 @@ To show print messages in tests run
 ```
 pytest -s
 ```
+
+## Docker
+
+Build image using Dockerfile in the repo:
+```
+docker build .
+```
+
+Create image with name:
+
+```
+docker build -t meteo-data-api .
+```
+
+Show all Docker images in the system:
+
+```
+docker image ls
+```
+
+Run image, connect to it in interactive mode and run bash (this - Ubuntu):
+```
+docker run -it <image_id> bash
+```
+
+One image is an image of system that I run. Container is a runnig copy of an image.
+Image is a recipy, container is a cooked dish.
+
+Shows all containers in the system:
+```
+docker ps -a
+```
+
+REmove container:
+```
+docker rm <container_id>
+```
+
+Remove image:
+```
+docker image rm <image_id>
+```
