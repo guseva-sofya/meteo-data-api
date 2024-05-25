@@ -8,7 +8,10 @@ ENV PATH="${PATH}:/root/.local/bin"
 WORKDIR /meteo-api/
 
 COPY poetry.lock pyproject.toml /
+# make poetry install packages to a global python environment
+RUN poetry config virtualenvs.create false
 RUN poetry install
 
 # Copy file to the current working directory (meteo-api)
 COPY main.py .
+COPY meteo meteo

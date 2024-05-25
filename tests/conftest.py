@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 import pytest
 from meteo import app as application
 from meteo import db
@@ -17,7 +19,8 @@ def app():
     yield app
 
     # clean up / reset resources here
-    db.clear()
+    env = application.read_environment()
+    db.clear(env.dbconfig())
 
 
 @pytest.fixture()

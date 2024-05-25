@@ -145,7 +145,7 @@ Shows all containers in the system:
 docker ps -a
 ```
 
-REmove container:
+Remove container:
 ```
 docker rm <container_id>
 ```
@@ -153,4 +153,9 @@ docker rm <container_id>
 Remove image:
 ```
 docker image rm <image_id>
+```
+
+Remove all unused images and containers:
+```
+docker system prune
 ```

@@ -1,4 +1,5 @@
 import os
+from dataclasses import dataclass
 from alembic.config import Config
 from alembic import command
 import psycopg2
@@ -6,17 +7,26 @@ import psycopg2
 connection = None
 
 
-def connect_to_db() -> psycopg2.extensions.connection:
+@dataclass
+class DbConfig:
+    database: str
+    user: str
+    password: str
+    host: str
+    port: str
+
+
+def connect_to_db(dbconfig: DbConfig) -> psycopg2.extensions.connection:
     global connection
     if connection is not None:
         return connection
 
     connection = psycopg2.connect(
-        database="meteo-data",
-        user="baloo",
-        password="junglebook",
-        host="localhost",  # use "localhost" for the local server
-        port="5432",  # typically 5432 for PostgreSQL
+        database=dbconfig.database,
+        user=dbconfig.user,
+        password=dbconfig.password,
+        host=dbconfig.host,  # use "localhost" for the local server
+        port=dbconfig.port,  # typically 5432 for PostgreSQL
     )
     print("Connected to PostgreSQL")
 
@@ -36,8 +46,8 @@ def run_alembic_migration():
     command.upgrade(alembic_cfg, "head")
 
 
-def clear():
-    conn = connect_to_db()
+def clear(dbconfig: DbConfig):
+    conn = connect_to_db(dbconfig)
     cursor = conn.cursor()
     cursor.execute("DELETE FROM temperature_records")
     conn.commit()
